@@ -70,6 +70,7 @@ class Adios2(CMakePackage, CudaPackage):
 
     # Rransport engines
     variant("sst", default=True, description="Enable the SST staging engine")
+    variant("ucx", default=True, description="Enable the ucx transport in SST engine")
     variant(
         "dataman",
         default=False,
@@ -112,6 +113,7 @@ class Adios2(CMakePackage, CudaPackage):
         )  # optional in EVPath and SST
         # depends_on('bison', when='+sst')     # optional in FFS, broken package
         # depends_on('flex', when='+sst')      # optional in FFS, depends on BISON
+        depends_on("ucx", when="+sst platform=%s" % _platform)  # UCX backend with SST
 
     depends_on("mpi", when="+mpi")
     depends_on("libzmq", when="+dataman")
@@ -193,6 +195,7 @@ class Adios2(CMakePackage, CudaPackage):
             from_variant("ADIOS2_USE_Python", "python"),
             from_variant("ADIOS2_USE_SSC", "ssc"),
             from_variant("ADIOS2_USE_SST", "sst"),
+            from_variant("ADIOS2_USE_UCX", "ucx"),
             from_variant("ADIOS2_USE_SZ", "sz"),
             from_variant("ADIOS2_USE_ZFP", "zfp"),
             from_variant("ADIOS2_USE_CUDA", "cuda"),
