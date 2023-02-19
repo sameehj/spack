@@ -118,6 +118,7 @@ class Wrf(Package):
         ),
     )
     variant("pnetcdf", default=True, description="Parallel IO support through Pnetcdf library")
+    variant("adios2", default=True, description="RDMA / Streaming IO support through adios2 library")
     variant("chem", default=False, description="Enable WRF-Chem", when="@4:")
     variant("netcdf_classic", default=False, description="Use NetCDF without HDF5 compression")
 
